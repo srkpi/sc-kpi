@@ -1,7 +1,7 @@
 #BULDING...
 FROM node:20-alpine as BUILDER-BACK
 
-WORKDIR /app
+WORKDIR /api-app
 COPY ./api /api-app/
 
 RUN yarn install
@@ -16,13 +16,12 @@ ARG NEXT_PUBLIC_API_BASE_URL
 ARG NEXT_PUBLIC_CAMPUS_API_BASE_URL
 ARG NEXT_PUBLIC_TINYMCE_API_KEY
 
-ENV NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY
-ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
-ENV NEXT_PUBLIC_CAMPUS_API_BASE_URL=$NEXT_PUBLIC_CAMPUS_API_BASE_URL
-ENV NEXT_PUBLIC_TINYMCE_API_KEY=$NEXT_PUBLIC_TINYMCE_API_KEY
-
 RUN yarn install
-RUN yarn build
+RUN NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY  \
+    NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL  \
+    NEXT_PUBLIC_CAMPUS_API_BASE_URL=$NEXT_PUBLIC_CAMPUS_API_BASE_URL \
+    NEXT_PUBLIC_TINYMCE_API_KEY=$NEXT_PUBLIC_TINYMCE_API_KEY \
+    yarn build
 
 FROM node:20-alpine as PROD
 
@@ -32,9 +31,9 @@ COPY --from=BUILDER-BACK /api-app/dist /api/dist
 COPY --from=BUILDER-BACK /api-app/package.json /api/package.json
 
 WORKDIR /front
-COPY --from=BUILDER-FRONT /front-app/node_modules /api/node_modules
-COPY --from=BUILDER-FRONT /front-app/dist /api/dist
-COPY --from=BUILDER-FRONT /front-app/package.json /api/package.json
+COPY --from=BUILDER-FRONT /front-app/node_modules /front/node_modules
+COPY --from=BUILDER-FRONT /front-app/.next /front/.next
+COPY --from=BUILDER-FRONT /front-app/package.json /front/package.json
 
 WORKDIR /api
 ENTRYPOINT [ "/bin/sh -c", "yarn", "start:prod", "&" ]

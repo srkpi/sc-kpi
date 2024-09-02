@@ -1,6 +1,8 @@
-[submodule "api-app"]
-	path = api-app
+[submodule "api"]
+	path = api
 	url = https://github.com/srkpi/sc-kpi-api
-[submodule "front-app"]
-	path = front-app
+	branch = master
+[submodule "front"]
+	path = front
 	url = https://github.com/srkpi/sc-kpi-web
+	branch = main
