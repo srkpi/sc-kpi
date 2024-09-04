@@ -1,5 +1,5 @@
 #BULDING...
-FROM node:20-alpine as BUILDER-BACK
+FROM node:20-alpine AS BUILDER-BACK
 
 WORKDIR /api-app
 COPY ./api /api-app/
@@ -7,7 +7,7 @@ COPY ./api /api-app/
 RUN yarn install
 RUN yarn build
 
-FROM node:20-alpine as BUILDER-FRONT
+FROM node:20-alpine AS BUILDER-FRONT
 WORKDIR /front-app
 COPY ./front /front-app/
 
@@ -23,7 +23,7 @@ RUN NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY  \
     NEXT_PUBLIC_TINYMCE_API_KEY=$NEXT_PUBLIC_TINYMCE_API_KEY \
     yarn build
 
-FROM node:20-alpine as PROD
+FROM node:20-alpine AS production
 
 RUN apk add --no-cache --update redis
 
@@ -37,7 +37,6 @@ COPY --from=BUILDER-FRONT /front-app/node_modules /front/node_modules
 COPY --from=BUILDER-FRONT /front-app/.next /front/.next
 COPY --from=BUILDER-FRONT /front-app/package.json /front/package.json
 
-ENTRYPOINT [ "sh -c", "yarn", "--cwd", "/api/", "start:prod", "&" ]
-
-CMD [ "sh -c", "yarn", "--cwd", "/front/", "start", "&"]
-CMD [ "sh -c", "redis-server" ]
+WORKDIR /
+COPY entrypoint.sh entrypoint.sh
+CMD ./entrypoint.sh
