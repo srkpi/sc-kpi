@@ -39,4 +39,5 @@ COPY --from=BUILDER-FRONT /front-app/package.json /front/package.json
 
 WORKDIR /
 COPY entrypoint.sh entrypoint.sh
+RUN ["chmod", "+x", "/entrypoint.sh"]
 CMD ./entrypoint.sh
