@@ -1,7 +1,7 @@
 #!/bin/sh
 
 yarn --cwd /api/ start:prod &
-yarn --cwd /front/ start &
+yarn --cwd /front/ start -p 5000 &
 redis-server &
 
 # Wait for any process to exit
