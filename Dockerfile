@@ -37,9 +37,7 @@ COPY --from=BUILDER-FRONT /front-app/node_modules /front/node_modules
 COPY --from=BUILDER-FRONT /front-app/.next /front/.next
 COPY --from=BUILDER-FRONT /front-app/package.json /front/package.json
 
-WORKDIR /api
-ENTRYPOINT [ "/bin/sh -c", "yarn", "start:prod", "&" ]
+ENTRYPOINT [ "sh -c", "yarn", "--cwd", "/api/", "start:prod", "&" ]
 
-WORKDIR /front
-CMD [ "/bin/sh -c", "yarn", "start", "&"]
-CMD [ "/bin/sh -c", "redis-server" ]
+CMD [ "sh -c", "yarn", "--cwd", "/front/", "start", "&"]
+CMD [ "sh -c", "redis-server" ]
