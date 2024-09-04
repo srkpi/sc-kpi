@@ -25,6 +25,8 @@ RUN NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY  \
 
 FROM node:20-alpine as PROD
 
+RUN apk add --no-cache --update redis
+
 WORKDIR /api
 COPY --from=BUILDER-BACK /api-app/node_modules /api/node_modules
 COPY --from=BUILDER-BACK /api-app/dist /api/dist
@@ -39,4 +41,5 @@ WORKDIR /api
 ENTRYPOINT [ "/bin/sh -c", "yarn", "start:prod", "&" ]
 
 WORKDIR /front
-CMD [ "/bin/sh -c", "yarn", "start"]
+CMD [ "/bin/sh -c", "yarn", "start", "&"]
+CMD [ "/bin/sh -c", "redis-server" ]
