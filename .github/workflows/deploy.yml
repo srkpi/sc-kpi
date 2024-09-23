@@ -41,7 +41,7 @@ jobs:
           RT_SECRET: ${{ secrets.RT_SECRET }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
         run: |
-          docker-compose up -d srkpi-backend-service
+          docker compose up -d srkpi-backend-service
           sleep 15
           
       - name: Build and push
