@@ -1,0 +1,30 @@
+version: '3'
+
+networks:
+  simple_network:
+    external: true
+
+services:
+  srkpi-backend-service:
+    image: markusplay/sc-kpi:latest
+    container_name: srkpi-cicd-container
+    restart: unless-stopped
+    networks:
+      - simple_network
+    ports:
+      - "8000:3000"
+    environment:
+      - AT_SECRET=${AT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_USERNAME=${EMAIL_USERNAME}
+      - FRONTEND_HOME_URI=${FRONTEND_HOME_URI}
+      - FRONTEND_IMPORT_PAGE_URI=${FRONTEND_IMPORT_PAGE_URI}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - IMGUR_CLIENT_ID=${IMGUR_CLIENT_ID}
+      - ORIGINS=${ORIGINS}
+      - REDIS_URL=${REDIS_URL}
+      - RT_SECRET=${RT_SECRET}
+      - X_API_KEY=${X_API_KEY}
