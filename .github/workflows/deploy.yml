@@ -41,10 +41,10 @@ jobs:
           RT_SECRET: ${{ secrets.RT_SECRET }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
         run: |
-          curl -X GET http://localhost:8000/api
           docker compose -f docker-compose.yml up -d
           echo "Waiting for backend to initialize..."
-          sleep 60
+          sleep 60s
+          curl -X GET http://localhost:8000/api
           
       - name: Build and push
         uses: docker/build-push-action@v6
