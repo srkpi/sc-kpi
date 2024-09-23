@@ -45,7 +45,6 @@ jobs:
           echo "Waiting for backend to initialize..."
           sleep 30s
           docker logs srkpi-cicd-container
-          curl -X GET http://localhost:8000/api
           
       - name: Build and push
         uses: docker/build-push-action@v6
