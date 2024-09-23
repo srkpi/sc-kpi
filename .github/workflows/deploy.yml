@@ -30,13 +30,13 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
-          FRONTEND_HOME_URI: ${{ secrets.FRONTEND_HOME_URI }}
-          FRONTEND_IMPORT_PAGE_URI: ${{ secrets.FRONTEND_IMPORT_PAGE_URI }}
+          FRONTEND_HOME_URI: ${{ vars.FRONTEND_HOME_URI }}
+          FRONTEND_IMPORT_PAGE_URI: ${{ vars.FRONTEND_IMPORT_PAGE_URI }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
           IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
-          ORIGINS: ${{ secrets.ORIGINS }}
+          ORIGINS: ${{ vars.ORIGINS }}
           REDIS_URL: ${{ secrets.REDIS_URL }}
           RT_SECRET: ${{ secrets.RT_SECRET }}
           X_API_KEY: ${{ vars.X_API_KEY }}
