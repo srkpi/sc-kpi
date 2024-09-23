@@ -5,8 +5,6 @@ services:
     image: markusplay/sc-kpi:latest
     container_name: srkpi-cicd-container
     restart: unless-stopped
-    networks:
-      - simple-network
     ports:
       - "8000:3000"
     environment:
