@@ -25,6 +25,9 @@ RUN NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY  \
 
 FROM node:20-alpine AS production
 
+EXPOSE 21015
+EXPOSE 5000
+
 RUN apk add --no-cache --update redis
 
 WORKDIR /api
@@ -36,6 +39,9 @@ WORKDIR /front
 COPY --from=BUILDER-FRONT /front-app/node_modules /front/node_modules
 COPY --from=BUILDER-FRONT /front-app/.next /front/.next
 COPY --from=BUILDER-FRONT /front-app/package.json /front/package.json
+COPY --from=build /front-app/public /front/public
+COPY --from=build /front-app/.next/standalone /front/
+COPY --from=build /front-app/.next/static /front-app/next/static
 
 WORKDIR /
 COPY entrypoint.sh entrypoint.sh
