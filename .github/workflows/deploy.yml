@@ -46,6 +46,9 @@ jobs:
           sleep 90s
           docker logs srkpi-cicd-container
           
+      - name: test app is still running
+        run: curl -i localhost:8000
+        
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
