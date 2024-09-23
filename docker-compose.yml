@@ -1,9 +1,5 @@
 version: '3'
 
-networks:
-  simple-network:
-    external: true
-
 services:
   srkpi-backend-service:
     image: markusplay/sc-kpi:latest
