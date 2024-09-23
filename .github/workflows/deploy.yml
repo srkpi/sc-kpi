@@ -43,7 +43,7 @@ jobs:
         run: |
           RUNNER_TRACKING_ID="" && docker compose -f docker-compose.yml up -d &
           echo "Waiting for backend to initialize..."
-          sleep 60s
+          sleep 220s
           docker logs srkpi-cicd-container
           
       - name: test app is still running
