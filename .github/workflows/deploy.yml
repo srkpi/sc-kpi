@@ -39,7 +39,7 @@ jobs:
           ORIGINS: ${{ secrets.ORIGINS }}
           REDIS_URL: ${{ secrets.REDIS_URL }}
           RT_SECRET: ${{ secrets.RT_SECRET }}
-          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_KEY: ${{ vars.X_API_KEY }}
         run: |
           RUNNER_TRACKING_ID="" && docker compose -f docker-compose.yml up -d &
           echo "Waiting for backend to initialize..."
