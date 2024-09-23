@@ -41,7 +41,7 @@ jobs:
           RT_SECRET: ${{ secrets.RT_SECRET }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
         run: |
-          docker compose -f docker-compose.yml up -d && sleep 15
+          docker compose -f docker-compose.yml up -d && sleep 5s
           
       - name: Build and push
         uses: docker/build-push-action@v6
