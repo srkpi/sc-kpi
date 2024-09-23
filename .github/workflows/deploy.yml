@@ -7,25 +7,44 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: 'true'
-      -
-        name: Set up QEMU
+      
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      -
-        name: Set up Docker Buildx
+      
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      -
-        name: Login to Docker Hub
+      
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+          
+      - name: Start backend for build
+        env:
+          AT_SECRET: ${{ secrets.AT_SECRET }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          FRONTEND_HOME_URI: ${{ secrets.FRONTEND_HOME_URI }}
+          FRONTEND_IMPORT_PAGE_URI: ${{ secrets.FRONTEND_IMPORT_PAGE_URI }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+          IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
+          ORIGINS: ${{ secrets.ORIGINS }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          RT_SECRET: ${{ secrets.RT_SECRET }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+        run: |
+          docker-compose up -d srkpi-backend-service
+          sleep 15
+          
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
