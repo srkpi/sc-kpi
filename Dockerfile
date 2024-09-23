@@ -39,9 +39,9 @@ WORKDIR /front
 COPY --from=BUILDER-FRONT /front-app/node_modules /front/node_modules
 COPY --from=BUILDER-FRONT /front-app/.next /front/.next
 COPY --from=BUILDER-FRONT /front-app/package.json /front/package.json
-COPY --from=build /front-app/public /front/public
-COPY --from=build /front-app/.next/standalone /front/
-COPY --from=build /front-app/.next/static /front-app/next/static
+COPY --from=BUILDER-FRONT /front-app/public /front/public
+COPY --from=BUILDER-FRONT /front-app/.next/standalone /front/
+COPY --from=BUILDER-FRONT /front-app/.next/static /front-app/next/static
 
 WORKDIR /
 COPY entrypoint.sh entrypoint.sh
